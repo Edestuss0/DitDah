@@ -26,16 +26,23 @@ class FreemodePlayViewModel @Inject internal constructor(
     private val _effects = Channel<FreemodePlayEffect>(Channel.BUFFERED)
     val effects = _effects.receiveAsFlow()
 
-    val difficulty = FreemodeDifficulty.valueOf(savedStateHandle.get("difficulty") ?: "easy")
-
     init {
         getQuestion()
     }
 
     fun onEvent(event: FreemodePlayEvent) {
         when (event) {
+            FreemodePlayEvent.ChangeModalVisibility -> {
+                _state.update { it.copy(isModalMenuOpen = !it.isModalMenuOpen) }
+            }
             is FreemodePlayEvent.Input -> {
                 _state.update { it.copy(currentInput = event.input) }
+            }
+            is FreemodePlayEvent.ChangeDifficulty -> {
+                if (event.difficulty != state.value.difficulty) {
+                    _state.update { it.copy(difficulty = event.difficulty) }
+                    getQuestion()
+                }
             }
             is FreemodePlayEvent.Back -> {
                 viewModelScope.launch {
@@ -58,7 +65,7 @@ class FreemodePlayViewModel @Inject internal constructor(
 
     private fun getQuestion() {
         _state.update { it.copy(isLoading = true) }
-        val question = getQuestion(difficulty)
+        val question = getQuestion(state.value.difficulty)
         _state.update { it.copy(question = question, isLoading = false) }
     }
 }

@@ -36,7 +36,8 @@ val morseToTextAlphabet: Map<String, String> = mapOf(
     "––···" to "7",
     "–––··" to "8",
     "––––·" to "9",
-    "–––––" to "0"
+    "–––––" to "0",
+    "/" to " "
 )
 
 val textToMorseAlphabet: Map<String, String> = mapOf(
@@ -75,7 +76,8 @@ val textToMorseAlphabet: Map<String, String> = mapOf(
     "7" to "––···",
     "8" to "–––··",
     "9" to "––––·",
-    "0" to "–––––"
+    "0" to "–––––",
+    "/" to " "
 )
 
 

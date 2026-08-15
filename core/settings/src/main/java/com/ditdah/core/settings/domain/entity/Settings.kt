@@ -5,7 +5,9 @@ data class Settings(
     val language: Language = Language.EN
 ) {
     fun getDotDuration(): Long = (1200 / wpm).toLong()
-    fun getWordDuration(): Long = getDotDuration() * 3
+    fun getDashDuration(): Long = getDotDuration() * 3
+    fun getCharDuration(): Long = getDotDuration() * 3
+    fun getWordDuration(): Long = getDotDuration() * 7
 }
 
 enum class Language{

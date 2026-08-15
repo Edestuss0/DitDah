@@ -14,12 +14,19 @@
             <option value="$PROJECT_DIR$/components/audioinput" />
             <option value="$PROJECT_DIR$/components/morsekey" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/config" />
             <option value="$PROJECT_DIR$/core/designsystem" />
             <option value="$PROJECT_DIR$/core/di" />
+            <option value="$PROJECT_DIR$/core/exception" />
             <option value="$PROJECT_DIR$/core/morse" />
+            <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/settings" />
+            <option value="$PROJECT_DIR$/core/user" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/auth" />
             <option value="$PROJECT_DIR$/features/freemode" />
+            <option value="$PROJECT_DIR$/features/practice" />
+            <option value="$PROJECT_DIR$/features/profile" />
           </set>
         </option>
       </GradleProjectSettings>

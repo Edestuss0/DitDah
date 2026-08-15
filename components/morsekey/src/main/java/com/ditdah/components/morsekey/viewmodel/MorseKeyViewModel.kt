@@ -53,7 +53,7 @@ class MorseKeyViewModel @Inject constructor(
 
     private fun onRelease() {
         val duration = System.currentTimeMillis() - pressedTime
-        val isDash = duration > settings.value.getDotDuration()
+        val isDash = duration >= settings.value.getDashDuration()
         val symbol = if (isDash) "–" else "·"
 
         player.stop()
@@ -65,7 +65,7 @@ class MorseKeyViewModel @Inject constructor(
         }
 
         decodeJob = viewModelScope.launch {
-            delay(settings.value.getWordDuration())
+            delay(settings.value.getCharDuration())
 
             val morse = state.value.currentMorseInput
             if (morse.isNotEmpty()) {

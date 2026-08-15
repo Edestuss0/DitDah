@@ -1,15 +1,27 @@
 package com.ditdah.core.designsystem.component
 
+import android.app.Activity
+import android.os.Build
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
@@ -19,6 +31,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,10 +42,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 
 @Composable
 fun AppCard(
@@ -176,6 +196,7 @@ fun AppTextField(
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppScaffold(
@@ -185,35 +206,83 @@ fun AppScaffold(
     snackbarHost: @Composable () -> Unit = {},
     hasBackButton: Boolean = false,
     onBackClick: () -> Unit = {},
-    content: @Composable (PaddingValues) -> Unit,
+    statusBarColor: Color? = null,
+    content: @Composable (innerPadding: PaddingValues) -> Unit,
 ) {
+    val context = LocalContext.current
+    val isDark = isSystemInDarkTheme()
+    val view = LocalView.current
+
+    SideEffect {
+        val window = (context as? Activity)?.window ?: return@SideEffect
+        if (!view.isInEditMode) {
+            val useDarkIcons = if (statusBarColor != null) {
+                statusBarColor.luminance() > 0.5f
+            } else {
+                !isDark
+            }
+
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = useDarkIcons
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = {
-            if (topBarText != null || hasBackButton == true) {
-                TopAppBar(
-                    title = { if (topBarText != null) Text(text = topBarText, style = MaterialTheme.typography.titleLarge) },
-                    navigationIcon = {
-                        if (hasBackButton == true) {
-                            IconButton(onClick = onBackClick) {
-                                Icon(
-                                    imageVector = Icons.Default.ChevronLeft,
-                                    contentDescription = "Назад"
-                                )
-                            }
-                        }
-                    }
-                )
-            }
-        },
         bottomBar = bottomBar,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = snackbarHost,
-    ) { innerPadding ->
-        Box(
+    ) { scaffoldPadding -> // Получаем отступы от Scaffold (содержат высоту bottomBar)
+        Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            content(innerPadding)
+            // 1. Занимаем место под статус-бар
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .windowInsetsTopHeight(WindowInsets.statusBars)
+                    .then(
+                        if (statusBarColor != null) Modifier.background(statusBarColor)
+                        else Modifier
+                    )
+            )
+
+            // 2. Верхняя панель (если есть)
+            if (topBarText != null || hasBackButton) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (hasBackButton) {
+                        IconButton(onClick = onBackClick) {
+                            Icon(
+                                imageVector = Icons.Default.ChevronLeft,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                contentDescription = null,
+                            )
+                        }
+                    }
+
+                    topBarText?.let {
+                        Text(
+                            text = it,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                HorizontalDivider()
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                content(scaffoldPadding)
+            }
         }
     }
 }

@@ -15,21 +15,34 @@ class PlayMorseUseCase @Inject internal constructor(
     suspend fun playMorse(text: String) {
         val settings = settings().value
 
-        text.forEach {
-            when (it.toString()) {
+        text.forEachIndexed { index, i ->
+            when (i.toString()) {
                 "·" -> {
                     play()
                     delay(settings.getDotDuration())
                     stop()
+
+                    if (index + 1 < text.length && (text[index + 1] == '·' || text[index + 1] == '–')) {
+                        delay(settings.getDotDuration())
+                    }
                 }
                 "–" -> {
                     play()
-                    delay(settings.getDotDuration() * 3)
+                    delay(settings.getDashDuration())
                     stop()
+
+                    if (index + 1 < text.length && (text[index + 1] == '·' || text[index + 1] == '–')) {
+                        delay(settings.getDotDuration())
+                    }
                 }
-                else -> return@forEach
+                " " -> {
+                    delay(settings.getCharDuration())
+                }
+                "/" -> {
+                    delay(settings.getWordDuration())
+                }
+                else -> return@forEachIndexed
             }
-            delay(settings.getDotDuration() * 3)
         }
     }
 }

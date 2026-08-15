@@ -1,5 +1,6 @@
 package com.ditdah.features.freemode.play.viewmodel
 
+import com.ditdah.core.morse.model.FreemodeDifficulty
 import com.ditdah.core.morse.model.MorseQuestion
 
 data class FreemodePlayState(
@@ -7,7 +8,9 @@ data class FreemodePlayState(
     val answerStreak: Int = 0,
     val currentInput: String = "",
     val isLoading: Boolean = false,
-    val answeredState: AnsweredState = AnsweredState()
+    val isModalMenuOpen: Boolean = false,
+    val answeredState: AnsweredState = AnsweredState(),
+    val difficulty: FreemodeDifficulty = FreemodeDifficulty.MEDIUM
 )
 
 data class AnsweredState(
@@ -16,6 +19,8 @@ data class AnsweredState(
 )
 
 sealed class FreemodePlayEvent {
+    data object ChangeModalVisibility : FreemodePlayEvent()
+    data class ChangeDifficulty(val difficulty: FreemodeDifficulty) : FreemodePlayEvent()
     data class Input(val input: String) : FreemodePlayEvent()
     data object Answer : FreemodePlayEvent()
     data object Continue : FreemodePlayEvent()

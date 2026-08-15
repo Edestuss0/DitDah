@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,8 @@ import androidx.compose.material.icons.filled.SignalCellularAlt
 import androidx.compose.material.icons.filled.SignalCellularAlt1Bar
 import androidx.compose.material.icons.filled.SignalCellularAlt2Bar
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +43,7 @@ import com.ditdah.components.morsekey.view.MorseKey
 import com.ditdah.core.designsystem.component.AppCard
 import com.ditdah.core.designsystem.component.AppScaffold
 import com.ditdah.core.designsystem.component.AppTextField
+import com.ditdah.core.designsystem.component.ButtonLabel
 import com.ditdah.core.designsystem.component.EmptyState
 import com.ditdah.core.designsystem.component.LoadingScreen
 import com.ditdah.core.designsystem.component.PrimaryButton
@@ -85,7 +89,10 @@ fun FreemodePlayScreen(
                 onAnswer = {viewModel.onEvent(FreemodePlayEvent.Answer)},
                 onContinue = {viewModel.onEvent(FreemodePlayEvent.Continue)},
                 streak = state.answerStreak,
-                difficulty = viewModel.difficulty
+                difficulty = state.difficulty,
+                onMenuChange = {viewModel.onEvent(FreemodePlayEvent.ChangeModalVisibility)},
+                onDifficultyChange = {viewModel.onEvent(FreemodePlayEvent.ChangeDifficulty(it))},
+                menuExpanded = state.isModalMenuOpen
             )
         }
     }
@@ -102,18 +109,20 @@ private fun FreemodePlayContent(
     onAnswer: () -> Unit,
     onContinue: () -> Unit,
     streak: Int,
-    difficulty: FreemodeDifficulty
+    difficulty: FreemodeDifficulty,
+    menuExpanded: Boolean,
+    onDifficultyChange: (FreemodeDifficulty) -> Unit,
+    onMenuChange: () -> Unit
 ) {
     AppScaffold(
         modifier = Modifier.fillMaxSize(),
         onBackClick = onBack,
         hasBackButton = true,
         topBarText = "Свободный режим"
-    ) { innerPadding ->
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -121,7 +130,9 @@ private fun FreemodePlayContent(
             Row(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AppCard(modifier = Modifier.weight(1f)) {
+                AppCard(modifier = Modifier
+                    .weight(1f)
+                    .clickable(onClick = onMenuChange)) {
                     Row(Modifier
                         .fillMaxWidth()
                         .padding(16.dp)) {
@@ -137,6 +148,21 @@ private fun FreemodePlayContent(
                             text = difficulty.label,
                             style = MaterialTheme.typography.titleMedium
                         )
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = onMenuChange,
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        FreemodeDifficulty.entries.forEach {
+                            DropdownMenuItem(
+                                text = { ButtonLabel(it.label) },
+                                onClick = {
+                                    onDifficultyChange(it)
+                                    onMenuChange()
+                                }
+                            )
+                        }
                     }
                 }
                 Spacer(Modifier.width(16.dp))
@@ -159,7 +185,9 @@ private fun FreemodePlayContent(
             when (question.type) {
                 MorseQuestionType.TEXT -> {
                     AppCard(modifier = Modifier.fillMaxWidth()) {
-                        Row(modifier = Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                             Text(
                                 text = "Введите:",
                                 style = MaterialTheme.typography.bodyLarge

@@ -63,9 +63,9 @@ private fun FreemodeHomeScreenContent(
 
     AppScaffold(
         modifier = Modifier.fillMaxSize()
-    ) { innerPadding ->
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(innerPadding).padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding().padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

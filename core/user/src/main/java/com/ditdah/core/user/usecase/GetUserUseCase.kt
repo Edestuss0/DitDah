@@ -1,0 +1,11 @@
+package com.ditdah.core.user.usecase
+
+import com.ditdah.core.user.model.User
+import com.ditdah.core.user.repository.UserRepository
+import javax.inject.Inject
+
+class GetUserUseCase @Inject internal constructor(
+    private val repository: UserRepository
+) {
+    suspend operator fun invoke(id: Int): Result<User> = repository.getUserById(id)
+}

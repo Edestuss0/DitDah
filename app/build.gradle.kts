@@ -76,11 +76,16 @@ dependencies {
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.okhttp)
-//    implementation(libs.ktor.client.content.negotation)
+    implementation(libs.ktor.client.content.negotation)
     implementation(libs.ktor.client.auth)
     implementation(libs.ktor.client.logging)
 
     implementation(project(":core:designsystem"))
     implementation(project(":features:freemode"))
+    implementation(project(":features:practice"))
+    implementation(project(":features:auth"))
+    implementation(project(":features:profile"))
 
+    implementation(project(":core:user"))
+    implementation(project(":core:network"))
 }

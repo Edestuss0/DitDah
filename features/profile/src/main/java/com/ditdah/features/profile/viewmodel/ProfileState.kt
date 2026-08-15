@@ -1,0 +1,12 @@
+package com.ditdah.features.profile.viewmodel
+
+import com.ditdah.core.user.model.User
+
+data class ProfileState(
+    val isLoading: Boolean = false,
+    val user: User? = null,
+)
+
+sealed class ProfileEffect {
+    data class Error(val message: String) : ProfileEffect()
+}
