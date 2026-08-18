@@ -4,6 +4,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ditdah.core.config.API_URL
 import com.ditdah.core.exception.AppException
+import com.ditdah.core.user.data.UserDto
+import com.ditdah.core.user.data.toDto
+import com.ditdah.core.user.data.toEntity
 import com.ditdah.core.user.model.LoginInput
 import com.ditdah.core.user.model.RegisterInput
 import com.ditdah.core.user.model.User

@@ -31,12 +31,8 @@ class ProfileViewModel @Inject constructor(
                     result == null -> {
                         _state.update { it.copy(isLoading = true) }
                     }
-                    result.isSuccess -> {
-                        _state.update { it.copy(isLoading = false, user = result.getOrNull()) }
-                    }
-                    result.isFailure -> {
-                        _state.update { it.copy(isLoading = false) }
-                        _effects.send(ProfileEffect.Error(message = result.exceptionOrNull()?.message ?: "Неизвестная ошибка"))
+                    else -> {
+                        _state.update { it.copy(isLoading = false, user = result) }
                     }
                 }
             }

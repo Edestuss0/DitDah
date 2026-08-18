@@ -6,11 +6,8 @@ plugins {
 }
 
 android {
-    namespace = "com.ditdah.core.user"
+    namespace = "com.ditdah.core.db"
     compileSdk = 37
-    defaultConfig {
-        minSdk = 25
-    }
 }
 
 dependencies {
@@ -20,20 +17,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
-    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.ktor.client.core)
-
-    implementation(libs.androidx.datastore)
-    implementation(libs.androidx.datastore.preferences)
-
-    implementation(project(":core:di"))
-    implementation(project(":core:settings"))
-    implementation(project(":core:config"))
-    implementation(project(":core:exception"))
-    implementation(project(":core:db"))
-    implementation(project(":core:di"))
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 }

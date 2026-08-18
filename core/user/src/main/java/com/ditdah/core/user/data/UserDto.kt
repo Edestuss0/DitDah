@@ -1,4 +1,4 @@
-package com.ditdah.core.user.data.remote
+package com.ditdah.core.user.data
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -8,10 +8,6 @@ import com.ditdah.core.user.model.SymbolStat
 import com.ditdah.core.user.model.User
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.LocalTime.parse
-import java.time.OffsetDateTime
-import kotlin.time.Instant
 
 @Serializable
 internal data class SymbolStatDto(
@@ -32,7 +28,17 @@ internal fun SymbolStatDto.toEntity(): SymbolStat = SymbolStat(
     wrong = wrong,
     consecutiveErrors = consecutive_errors,
     weight = weight,
-    lastPracticed = OffsetDateTime.parse(last_practiced).toLocalDateTime()
+    lastPracticed = LocalDateTime.parse(last_practiced)
+)
+
+internal fun SymbolStat.toDto(): SymbolStatDto = SymbolStatDto(
+    user_id = userId,
+    symbol = symbol,
+    correct = correct,
+    wrong = wrong,
+    consecutive_errors = consecutiveErrors,
+    weight = weight,
+    last_practiced = lastPracticed.toString()
 )
 
 @Serializable
@@ -74,13 +80,36 @@ internal fun UserDto.toEntity(): User = User(
     coins = coins,
     dayStreak = dayStreak,
     answerStreak = answerStreak,
-    lastLogin = OffsetDateTime.parse(lastLogin).toLocalDateTime(),
+    lastLogin = LocalDateTime.parse(lastLogin),
     invitedBy = invitedBy ?: 0,
     referralCode = referralCode ?: "",
-    registeredDate = OffsetDateTime.parse(registeredDate).toLocalDateTime(),
+    registeredDate = LocalDateTime.parse(registeredDate),
     friends = friends,
     unlockedAchievements = unlockedAchievements,
     symbolStats = symbolStats?.map { it.toEntity() } ?: emptyList()
+)
+
+internal fun User.toDto(): UserDto = UserDto(
+    id = id,
+    username = username,
+    xp = xp,
+    needXp = needXp,
+    level = level,
+    lessonsDoneEn = lessonDoneEn,
+    lessonsDoneRu = lessonDoneRu,
+    elo = elo,
+    duelsWin = duelsWin,
+    duelMaxScore = duelMaxScore,
+    coins = coins,
+    dayStreak = dayStreak,
+    answerStreak = answerStreak,
+    lastLogin = lastLogin.toString(),
+    invitedBy = invitedBy,
+    referralCode = referralCode,
+    registeredDate = registeredDate.toString(),
+    friends = friends,
+    unlockedAchievements = unlockedAchievements,
+    symbolStats = symbolStats.map { it.toDto() }
 )
 
 @Serializable
