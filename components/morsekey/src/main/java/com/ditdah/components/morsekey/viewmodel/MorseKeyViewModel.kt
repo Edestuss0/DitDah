@@ -2,8 +2,8 @@ package com.ditdah.components.morsekey.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ditdah.core.morse.usecase.CodeMorseUseCase
-import com.ditdah.core.morse.usecase.PlayMorseUseCase
+import com.ditdah.core.morse.domain.usecase.CodeMorseUseCase
+import com.ditdah.core.morse.domain.usecase.PlayMorseUseCase
 import com.ditdah.core.settings.domain.usecase.GetSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

@@ -1,6 +1,6 @@
 package com.ditdah.features.profile.viewmodel
 
-import com.ditdah.core.user.model.User
+import com.ditdah.core.user.domain.entity.User
 
 data class ProfileState(
     val isLoading: Boolean = false,

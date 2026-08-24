@@ -1,9 +1,8 @@
 package com.ditdah.features.auth.viewmodel
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ditdah.core.user.usecase.AuthUserUseCase
+import com.ditdah.core.user.domain.usecase.AuthUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow

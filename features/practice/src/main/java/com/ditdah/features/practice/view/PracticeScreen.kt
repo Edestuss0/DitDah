@@ -36,9 +36,7 @@ import com.ditdah.core.designsystem.theme.DitdahTheme
 @Composable
 fun PracticeScreen(
     onFreemodeClick: () -> Unit,
-    onLettersClick: () -> Unit
 ) {
-
     AppScaffold(modifier = Modifier.fillMaxSize(), statusBarColor = MaterialTheme.colorScheme.surfaceContainer) {
         Column(modifier = Modifier
             .fillMaxSize()
@@ -86,12 +84,6 @@ fun PracticeScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 PracticeCard(
-                    onClick = onLettersClick,
-                    title = "Отработка букв",
-                    subtitle = "Изучайте и повторяйте отдельные символы",
-                    icon = Icons.Default.Dashboard
-                )
-                PracticeCard(
                     onClick = onFreemodeClick,
                     title = "Свободный режим",
                     subtitle = "Тренируйтесь на случайно-генерируемых вопросах",
@@ -105,7 +97,7 @@ fun PracticeScreen(
                 PracticeCard(
                     onClick = { /* TODO */ },
                     title = "Изученное мной",
-                    subtitle = "Словарь пройденных знаков и слов",
+                    subtitle = "Словарь пройденных слов и сокращений",
                     icon = Icons.Default.Collections
                 )
             }
@@ -170,7 +162,7 @@ private fun PracticeCard(
 private fun PracticeScreenPreview() {
     DitdahTheme(darkTheme = true) {
         PracticeScreen(
-            onLettersClick = {}, onFreemodeClick = {}
+            onFreemodeClick = {}
         )
     }
 }

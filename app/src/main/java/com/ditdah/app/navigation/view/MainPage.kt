@@ -19,6 +19,7 @@ import com.ditdah.app.navigation.Screens
 import com.ditdah.app.navigation.Tabs
 import com.ditdah.features.practice.view.PracticeScreen
 import com.ditdah.features.profile.view.ProfileScreen
+import com.ditdah.features.symbols.home.view.SymbolsHomeScreen
 
 @Composable
 fun MainPage(
@@ -28,7 +29,6 @@ fun MainPage(
     val backStackEntry by tabNavController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
-    // Используем обычный Scaffold, чтобы не дублировать Spacer статус-бара
     Scaffold(
         bottomBar = {
             NavigationBar {
@@ -60,7 +60,12 @@ fun MainPage(
             composable(Tabs.Practice.route) {
                 PracticeScreen(
                     onFreemodeClick = { rootNavController.navigate(Screens.FreemodePlay.route) },
-                    onLettersClick = {}
+                )
+            }
+
+            composable(Tabs.SymbolsHome.route) {
+                SymbolsHomeScreen(
+                    onPlay = { rootNavController.navigate(Screens.SymbolsPlay.navigate(it)) }
                 )
             }
 

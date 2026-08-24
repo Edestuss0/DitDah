@@ -1,7 +1,7 @@
 package com.ditdah.features.freemode.play.viewmodel
 
-import com.ditdah.core.morse.model.FreemodeDifficulty
-import com.ditdah.core.morse.model.MorseQuestion
+import com.ditdah.core.morse.domain.entity.FreemodeDifficulty
+import com.ditdah.core.morse.domain.entity.MorseQuestion
 
 data class FreemodePlayState(
     val question: MorseQuestion? = null,

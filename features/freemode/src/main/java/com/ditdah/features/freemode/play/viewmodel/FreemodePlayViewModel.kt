@@ -3,8 +3,7 @@ package com.ditdah.features.freemode.play.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ditdah.core.morse.model.FreemodeDifficulty
-import com.ditdah.core.morse.usecase.FreemodeGeneratorUseCase
+import com.ditdah.core.morse.domain.usecase.FreemodeGeneratorUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +15,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FreemodePlayViewModel @Inject internal constructor(
-    savedStateHandle: SavedStateHandle,
     private val getQuestion: FreemodeGeneratorUseCase
 ): ViewModel() {
 

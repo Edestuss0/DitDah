@@ -47,11 +47,9 @@ import com.ditdah.core.designsystem.component.ButtonLabel
 import com.ditdah.core.designsystem.component.EmptyState
 import com.ditdah.core.designsystem.component.LoadingScreen
 import com.ditdah.core.designsystem.component.PrimaryButton
-import com.ditdah.core.designsystem.theme.ErrorRed
-import com.ditdah.core.designsystem.theme.SuccessGreen
-import com.ditdah.core.morse.model.FreemodeDifficulty
-import com.ditdah.core.morse.model.MorseQuestion
-import com.ditdah.core.morse.model.MorseQuestionType
+import com.ditdah.core.morse.domain.entity.FreemodeDifficulty
+import com.ditdah.core.morse.domain.entity.MorseQuestion
+import com.ditdah.core.morse.domain.entity.MorseQuestionType
 import com.ditdah.features.freemode.play.viewmodel.AnsweredState
 import com.ditdah.features.freemode.play.viewmodel.FreemodePlayEffect
 import com.ditdah.features.freemode.play.viewmodel.FreemodePlayEvent

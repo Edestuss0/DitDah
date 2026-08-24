@@ -2,7 +2,7 @@ package com.ditdah.components.audioinput.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ditdah.core.morse.usecase.PlayMorseUseCase
+import com.ditdah.core.morse.domain.usecase.PlayMorseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

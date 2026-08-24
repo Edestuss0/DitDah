@@ -2,10 +2,10 @@ package com.ditdah.core.user.data
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.ditdah.core.user.model.LoginInput
-import com.ditdah.core.user.model.RegisterInput
-import com.ditdah.core.user.model.SymbolStat
-import com.ditdah.core.user.model.User
+import com.ditdah.core.user.domain.entity.LoginInput
+import com.ditdah.core.user.domain.entity.RegisterInput
+import com.ditdah.core.user.domain.entity.SymbolStat
+import com.ditdah.core.user.domain.entity.User
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 

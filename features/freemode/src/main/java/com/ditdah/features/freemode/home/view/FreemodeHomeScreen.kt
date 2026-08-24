@@ -27,7 +27,7 @@ import com.ditdah.core.designsystem.component.AppScaffold
 import com.ditdah.core.designsystem.component.ButtonLabel
 import com.ditdah.core.designsystem.component.PrimaryButton
 import com.ditdah.core.designsystem.theme.DitdahTheme
-import com.ditdah.core.morse.model.FreemodeDifficulty
+import com.ditdah.core.morse.domain.entity.FreemodeDifficulty
 import com.ditdah.features.freemode.home.viewmodel.FreemodeHomeEffect
 import com.ditdah.features.freemode.home.viewmodel.FreemodeHomeEvent
 import com.ditdah.features.freemode.home.viewmodel.FreemodeHomeViewModel

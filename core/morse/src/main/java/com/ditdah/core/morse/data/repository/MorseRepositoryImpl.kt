@@ -1,7 +1,7 @@
 package com.ditdah.core.morse.data.repository
 
 import com.ditdah.core.morse.data.audio.MorseAudioPlayer
-import com.ditdah.core.morse.repository.MorseRepository
+import com.ditdah.core.morse.domain.repository.MorseRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

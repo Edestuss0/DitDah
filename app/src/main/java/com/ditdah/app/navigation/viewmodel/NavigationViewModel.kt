@@ -3,7 +3,7 @@ package com.ditdah.app.navigation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ditdah.core.network.SessionManager
-import com.ditdah.core.user.usecase.AuthUserUseCase
+import com.ditdah.core.user.domain.usecase.AuthUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

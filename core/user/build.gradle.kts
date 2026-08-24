@@ -30,7 +30,6 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
 
-    implementation(project(":core:di"))
     implementation(project(":core:settings"))
     implementation(project(":core:config"))
     implementation(project(":core:exception"))

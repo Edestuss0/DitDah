@@ -22,8 +22,8 @@ import com.ditdah.core.designsystem.component.AppTextButton
 import com.ditdah.core.designsystem.component.AppTextField
 import com.ditdah.core.designsystem.component.PrimaryButton
 import com.ditdah.core.designsystem.component.SnackbarMessageType
-import com.ditdah.core.user.model.LoginInput
-import com.ditdah.core.user.model.RegisterInput
+import com.ditdah.core.user.domain.entity.LoginInput
+import com.ditdah.core.user.domain.entity.RegisterInput
 import com.ditdah.features.auth.viewmodel.AuthEffect
 import com.ditdah.features.auth.viewmodel.AuthEvent
 import com.ditdah.features.auth.viewmodel.AuthVIewModel

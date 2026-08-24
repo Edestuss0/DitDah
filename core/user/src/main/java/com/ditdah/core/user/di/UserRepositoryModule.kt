@@ -1,7 +1,7 @@
 package com.ditdah.core.user.di
 
 import com.ditdah.core.user.data.repository.UserRepositoryImpl
-import com.ditdah.core.user.repository.UserRepository
+import com.ditdah.core.user.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,7 +1,7 @@
 package com.ditdah.features.auth.viewmodel
 
-import com.ditdah.core.user.model.LoginInput
-import com.ditdah.core.user.model.RegisterInput
+import com.ditdah.core.user.domain.entity.LoginInput
+import com.ditdah.core.user.domain.entity.RegisterInput
 
 data class AuthState(
     val isLoading: Boolean = false,

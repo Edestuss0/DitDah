@@ -1,6 +1,6 @@
 package com.ditdah.features.freemode.home.viewmodel
 
-import com.ditdah.core.morse.model.FreemodeDifficulty
+import com.ditdah.core.morse.domain.entity.FreemodeDifficulty
 
 data class FreemodeHomeState(
     val selectedDifficulty: FreemodeDifficulty = FreemodeDifficulty.MEDIUM,

@@ -4,12 +4,10 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ditdah.core.db.features.user.UserDao
 import com.ditdah.core.db.features.user.UserEntity
-import com.ditdah.core.di.ApplicationScope
-import com.ditdah.core.di.IoDispatcher
 import com.ditdah.core.user.data.UserDto
 import com.ditdah.core.user.data.toDto
 import com.ditdah.core.user.data.toEntity
-import com.ditdah.core.user.model.User
+import com.ditdah.core.user.domain.entity.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json

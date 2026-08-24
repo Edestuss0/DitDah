@@ -49,7 +49,7 @@ import com.ditdah.core.designsystem.component.AppSnackbarVisuals
 import com.ditdah.core.designsystem.component.EmptyState
 import com.ditdah.core.designsystem.component.LoadingScreen
 import com.ditdah.core.designsystem.component.SnackbarMessageType
-import com.ditdah.core.user.model.User
+import com.ditdah.core.user.domain.entity.User
 import com.ditdah.features.profile.viewmodel.ProfileEffect
 import com.ditdah.features.profile.viewmodel.ProfileViewModel
 

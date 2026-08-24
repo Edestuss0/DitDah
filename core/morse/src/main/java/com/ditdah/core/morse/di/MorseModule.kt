@@ -1,7 +1,7 @@
 package com.ditdah.core.morse.di
 
 import com.ditdah.core.morse.data.repository.MorseRepositoryImpl
-import com.ditdah.core.morse.repository.MorseRepository
+import com.ditdah.core.morse.domain.repository.MorseRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -7,9 +7,9 @@ import com.ditdah.core.exception.AppException
 import com.ditdah.core.user.data.UserDto
 import com.ditdah.core.user.data.toDto
 import com.ditdah.core.user.data.toEntity
-import com.ditdah.core.user.model.LoginInput
-import com.ditdah.core.user.model.RegisterInput
-import com.ditdah.core.user.model.User
+import com.ditdah.core.user.domain.entity.LoginInput
+import com.ditdah.core.user.domain.entity.RegisterInput
+import com.ditdah.core.user.domain.entity.User
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
