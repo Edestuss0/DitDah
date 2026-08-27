@@ -1,5 +1,6 @@
 package com.ditdah.core.user.domain.usecase
 
+import com.ditdah.core.exception.AppException
 import com.ditdah.core.user.domain.entity.LoginInput
 import com.ditdah.core.user.domain.entity.RegisterInput
 import com.ditdah.core.user.domain.repository.UserRepository
@@ -11,10 +12,10 @@ class AuthUserUseCase @Inject internal constructor(
     suspend fun login(input: LoginInput) {
         when {
             input.username.isBlank()-> {
-                throw IllegalArgumentException("Пожалуйста, введите имя пользователя")
+                throw AppException.Validation("Пожалуйста, введите имя пользователя")
             }
             input.password.isBlank()-> {
-                throw IllegalArgumentException("Пожалуйста, введите пароль")
+                throw AppException.Validation("Пожалуйста, введите пароль")
             }
         }
         repository.login(input)
@@ -22,10 +23,10 @@ class AuthUserUseCase @Inject internal constructor(
     suspend fun register(input: RegisterInput) {
         when {
             input.username.length < 6 || input.username.length > 20 -> {
-                throw IllegalArgumentException("Имя пользователя должно содержать от 6 до 20 символов")
+                throw AppException.Validation("Имя пользователя должно содержать от 6 до 20 символов")
             }
             input.password.length < 4  -> {
-                throw IllegalArgumentException(" должно содержать от 4 символов")
+                throw AppException.Validation("Пароль должен содержать от 4 символов")
             }
         }
         repository.register(input)

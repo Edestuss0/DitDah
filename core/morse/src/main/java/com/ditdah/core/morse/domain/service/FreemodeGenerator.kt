@@ -10,17 +10,19 @@ import kotlin.random.nextInt
 
 internal class FreemodeGenerator @Inject constructor() {
 
-    fun generate(difficulty: FreemodeDifficulty): MorseQuestion {
-        val length = when (difficulty) {
-            FreemodeDifficulty.EASY -> Random.nextInt(1..3)
-            FreemodeDifficulty.MEDIUM -> Random.nextInt(3..6)
-            FreemodeDifficulty.HARD -> Random.nextInt(5..9)
+    fun generate(difficulty: FreemodeDifficulty, symbol: String? = null): MorseQuestion {
+        val length = when {
+            symbol == null -> Random.nextInt(2..5)
+            difficulty == FreemodeDifficulty.EASY -> Random.nextInt(1..3)
+            difficulty == FreemodeDifficulty.MEDIUM -> Random.nextInt(3..6)
+            difficulty == FreemodeDifficulty.HARD -> Random.nextInt(5..9)
+            else -> 3
         }
 
-        return generateByLength(length)
+        return generateByLength(length, symbol)
     }
 
-    private fun generateByLength(length: Int): MorseQuestion {
+    private fun generateByLength(length: Int, symbol: String?): MorseQuestion {
         val type = MorseQuestionType.entries.random()
 
         when (type) {
@@ -29,47 +31,25 @@ internal class FreemodeGenerator @Inject constructor() {
                 var answer = ""
 
                 repeat(length) {
-                    val letter = textToMorseAlphabet.entries.random()
+                    val letter = if (symbol == null) textToMorseAlphabet.entries.random() else textToMorseAlphabet.entries.find { it.key == symbol }
+                    if (letter == null) { throw IllegalArgumentException("Информация по данному символу не найдена") }
                     question += letter.key
                     answer += letter.key
                 }
 
-                return MorseQuestion(
-                    type = type,
-                    answer = answer,
-                    question = question
-                )
+                return MorseQuestion(type = type, answer = answer, question = question)
             }
-            MorseQuestionType.MORSE -> {
+            MorseQuestionType.MORSE, MorseQuestionType.AUDIO -> {
                 var question = ""
                 var answer = ""
 
                 repeat(length) {
-                    val letter = textToMorseAlphabet.entries.random()
+                    val letter = if (symbol == null) textToMorseAlphabet.entries.random() else textToMorseAlphabet.entries.find { it.key == symbol }
+                    if (letter == null) { throw IllegalArgumentException("Информация по данному символу не найдена") }
                     question += "${letter.value} "
                     answer += letter.key
                 }
-                return MorseQuestion(
-                    type = type,
-                    answer = answer,
-                    question = question
-                )
-            }
-
-            MorseQuestionType.AUDIO -> {
-                var question = ""
-                var answer = ""
-
-                repeat(length) {
-                    val letter = textToMorseAlphabet.entries.random()
-                    question += "${letter.value} "
-                    answer += letter.key
-                }
-                return MorseQuestion(
-                    type = type,
-                    answer = answer,
-                    question = question
-                )
+                return MorseQuestion(type = type, answer = answer, question = question)
             }
         }
     }

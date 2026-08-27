@@ -29,42 +29,27 @@ internal class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     private val _userState = local.observeMe()
-    private val userState = _userState.onEach { user ->
-            if (user == null) invalidateMe()
-        }.stateIn(
-            scope = scope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
-        )
+    private val userState = _userState.onEach { user -> if (user == null) invalidateMe() }.stateIn(
+        scope = scope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = null
+    )
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun invalidateMe() {
-        val user = runCatching { remote.getMe() }.mapCatching { it }.onFailure { it.toAppException() }
-        val userData = user.getOrNull()
-        if (user.isSuccess && userData != null) {
-            local.invalidateMe()
-            local.insert(true, userData)
-        } else {
-            throw user.exceptionOrNull() ?: AppException.Unknown
-        }
+        runCatching { remote.getMe() }.onSuccess { local.invalidateMe(); local.insert(true, it) }.getOrElse { throw it.toAppException() }
     }
 
     override suspend fun register(input: RegisterInput): Result<Unit> = runCatching { remote.register(input) }
-        .onFailure { it.toAppException() }
-        .onSuccess { local.changeAuthStatus(true) }
+        .onFailure { it.toAppException() }.onSuccess { local.changeAuthStatus(true) }
 
     override suspend fun login(input: LoginInput): Result<Unit> = runCatching { remote.login(input) }
-        .onFailure { it.toAppException() }
-        .onSuccess { local.changeAuthStatus(true) }
+        .onFailure { it.toAppException() }.onSuccess { local.changeAuthStatus(true) }
 
     override suspend fun getMe(): StateFlow<User?> = userState
 
-    override suspend fun getUserById(id: Int): Result<User> = runCatching { remote.getUserById(id) }.onFailure { it.toAppException() }
+    override suspend fun getUserById(id: Int): Result<User> = runCatching { remote.getUserById(id) }.recoverCatching { throw it.toAppException() }
 
-    override suspend fun logout(): Result<Unit> = runCatching {
-        local.changeAuthStatus(false)
-        remote.logout()
-    }
+    override suspend fun logout(): Result<Unit> = runCatching { local.changeAuthStatus(false); remote.logout() }
 
     override fun getAuthStatus(): Flow<Boolean> = local.getAuthStatus()
 }

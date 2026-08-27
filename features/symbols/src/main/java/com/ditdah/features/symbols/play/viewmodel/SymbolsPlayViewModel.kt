@@ -3,7 +3,7 @@ package com.ditdah.features.symbols.play.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ditdah.core.morse.domain.usecase.SymbolsGeneratorUseCase
+import com.ditdah.core.morse.domain.usecase.FreemodeGeneratorUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SymbolsPlayViewModel @Inject internal constructor(
-    private val generator: SymbolsGeneratorUseCase,
+    private val generator: FreemodeGeneratorUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = MutableStateFlow(SymbolsPlayState())
@@ -59,7 +59,7 @@ class SymbolsPlayViewModel @Inject internal constructor(
 
     private fun getQuestion() {
         _state.update { it.copy(isLoading = true) }
-        val question = runCatching { generator(symbol) }
+        val question = runCatching { generator(symbol = symbol) }
         if (question.isSuccess && question.getOrNull() != null) {
             _state.update { it.copy(question = question.getOrNull(), isLoading = false) }
         } else {

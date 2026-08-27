@@ -26,7 +26,6 @@ class ProfileViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getMe().collect { result ->
-                Log.d("USER", result.toString())
                 when {
                     result == null -> {
                         _state.update { it.copy(isLoading = true) }

@@ -9,5 +9,7 @@ sealed class AppException(override val message: String) : Throwable() {
 
     data object Serialization : AppException("Ошибка сериализации")
 
+    data class Validation(val text: String) : AppException("Ошибка валидации: ${text}")
+
     data object Unknown : AppException("Неизвестная ошибка")
 }

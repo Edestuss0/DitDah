@@ -32,6 +32,5 @@ dependencies {
 
     api(project(":core:morse"))
     implementation(project(":core:designsystem"))
-    implementation(project(":components:morsekey"))
-    implementation(project(":components:audioinput"))
+    implementation(project(":components:freemode"))
 }

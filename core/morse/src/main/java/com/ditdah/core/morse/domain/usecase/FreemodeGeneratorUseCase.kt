@@ -8,5 +8,5 @@ import javax.inject.Inject
 class FreemodeGeneratorUseCase @Inject internal constructor(
     private val generator: FreemodeGenerator
 ) {
-    operator fun invoke(difficulty: FreemodeDifficulty): MorseQuestion = generator.generate(difficulty)
+    operator fun invoke(difficulty: FreemodeDifficulty = FreemodeDifficulty.MEDIUM, symbol: String? = null): MorseQuestion = generator.generate(difficulty, symbol)
 }

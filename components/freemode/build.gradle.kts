@@ -1,12 +1,10 @@
 plugins {
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.google.ksp)
-    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.ditdah.features.freemode"
+    namespace = "com.ditdah.components.freemode"
     compileSdk = 37
     buildFeatures {
         compose = true
@@ -26,11 +24,8 @@ dependencies {
     api(libs.androidx.lifecycle.compose)
     api(libs.androidx.compose.runtime)
 
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    ksp(libs.hilt.compiler)
-
     api(project(":core:morse"))
     implementation(project(":core:designsystem"))
-    implementation(project(":components:freemode"))
+    implementation(project(":components:morsekey"))
+    implementation(project(":components:audioinput"))
 }

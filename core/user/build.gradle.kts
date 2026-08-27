@@ -21,6 +21,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.kotlinx.serialization.json)
+    api(libs.kotlinx.datetime)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

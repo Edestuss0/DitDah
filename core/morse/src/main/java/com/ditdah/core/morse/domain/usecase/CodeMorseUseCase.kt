@@ -9,4 +9,7 @@ class CodeMorseUseCase @Inject internal constructor(
     fun decode(text: String): String = encoder.decode(text)
     fun encode(text: String): String = encoder.encode(text)
 
+    fun decodeLetter(text: String): String = encoder.decodeLetter(text)
+    fun encodeLetter(text: String): String = encoder.encodeLetter(text)
+
 }

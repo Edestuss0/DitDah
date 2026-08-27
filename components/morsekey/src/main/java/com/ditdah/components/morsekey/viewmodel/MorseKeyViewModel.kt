@@ -69,7 +69,7 @@ class MorseKeyViewModel @Inject constructor(
 
             val morse = state.value.currentMorseInput
             if (morse.isNotEmpty()) {
-                val decoded = decoder.decode(morse)
+                val decoded = decoder.decodeLetter(morse)
                 _state.update {
                     it.copy(
                         currentInput = it.currentInput + decoded,

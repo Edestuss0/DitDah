@@ -1,13 +1,11 @@
 package com.ditdah.core.user.data
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.ditdah.core.user.domain.entity.LoginInput
 import com.ditdah.core.user.domain.entity.RegisterInput
 import com.ditdah.core.user.domain.entity.SymbolStat
 import com.ditdah.core.user.domain.entity.User
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
-import java.time.LocalDateTime
 
 @Serializable
 internal data class SymbolStatDto(
@@ -20,7 +18,6 @@ internal data class SymbolStatDto(
     val last_practiced: String
 )
 
-@RequiresApi(Build.VERSION_CODES.O)
 internal fun SymbolStatDto.toEntity(): SymbolStat = SymbolStat(
     userId = user_id,
     symbol = symbol,
@@ -65,7 +62,6 @@ internal data class UserDto(
     val symbolStats: List<SymbolStatDto>?
 )
 
-@RequiresApi(Build.VERSION_CODES.O)
 internal fun UserDto.toEntity(): User = User(
     id = id,
     username = username,
