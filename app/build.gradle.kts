@@ -88,5 +88,7 @@ dependencies {
     implementation(project(":features:symbols"))
 
     implementation(project(":core:user"))
+    implementation(project(":core:di"))
     implementation(project(":core:network"))
+    implementation(project(":core:settings"))
 }

@@ -33,4 +33,5 @@ dependencies {
     api(project(":core:morse"))
     implementation(project(":core:designsystem"))
     implementation(project(":components:freemode"))
+    implementation(project(":core:settings"))
 }

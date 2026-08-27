@@ -30,6 +30,7 @@
             <option value="$PROJECT_DIR$/features/freemode" />
             <option value="$PROJECT_DIR$/features/practice" />
             <option value="$PROJECT_DIR$/features/profile" />
+            <option value="$PROJECT_DIR$/features/settings" />
             <option value="$PROJECT_DIR$/features/symbols" />
           </set>
         </option>

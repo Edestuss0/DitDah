@@ -4,13 +4,15 @@ import com.ditdah.core.morse.domain.entity.FreemodeDifficulty
 import com.ditdah.core.morse.domain.entity.MorseQuestion
 import com.ditdah.core.morse.domain.entity.MorseQuestionType
 import com.ditdah.core.morse.domain.entity.textToMorseAlphabet
+import com.ditdah.core.morse.domain.entity.textToMorseAlphabetRu
+import com.ditdah.core.settings.domain.entity.Language
 import javax.inject.Inject
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 internal class FreemodeGenerator @Inject constructor() {
 
-    fun generate(difficulty: FreemodeDifficulty, symbol: String? = null): MorseQuestion {
+    fun generate(difficulty: FreemodeDifficulty, symbol: String? = null, language: Language): MorseQuestion {
         val length = when {
             symbol == null -> Random.nextInt(2..5)
             difficulty == FreemodeDifficulty.EASY -> Random.nextInt(1..3)
@@ -19,10 +21,10 @@ internal class FreemodeGenerator @Inject constructor() {
             else -> 3
         }
 
-        return generateByLength(length, symbol)
+        return generateByLength(length, symbol, language)
     }
 
-    private fun generateByLength(length: Int, symbol: String?): MorseQuestion {
+    private fun generateByLength(length: Int, symbol: String?, language: Language): MorseQuestion {
         val type = MorseQuestionType.entries.random()
 
         when (type) {
@@ -31,7 +33,10 @@ internal class FreemodeGenerator @Inject constructor() {
                 var answer = ""
 
                 repeat(length) {
-                    val letter = if (symbol == null) textToMorseAlphabet.entries.random() else textToMorseAlphabet.entries.find { it.key == symbol }
+                    val letter = when (language) {
+                        Language.EN -> if (symbol == null) textToMorseAlphabet.entries.random() else textToMorseAlphabet.entries.find { it.key == symbol }
+                        Language.RU -> if (symbol == null) textToMorseAlphabetRu.entries.random() else textToMorseAlphabetRu.entries.find { it.key == symbol }
+                    }
                     if (letter == null) { throw IllegalArgumentException("Информация по данному символу не найдена") }
                     question += letter.key
                     answer += letter.key
@@ -44,7 +49,10 @@ internal class FreemodeGenerator @Inject constructor() {
                 var answer = ""
 
                 repeat(length) {
-                    val letter = if (symbol == null) textToMorseAlphabet.entries.random() else textToMorseAlphabet.entries.find { it.key == symbol }
+                    val letter = when (language) {
+                        Language.EN -> if (symbol == null) textToMorseAlphabet.entries.random() else textToMorseAlphabet.entries.find { it.key == symbol }
+                        Language.RU -> if (symbol == null) textToMorseAlphabetRu.entries.random() else textToMorseAlphabetRu.entries.find { it.key == symbol }
+                    }
                     if (letter == null) { throw IllegalArgumentException("Информация по данному символу не найдена") }
                     question += "${letter.value} "
                     answer += letter.key

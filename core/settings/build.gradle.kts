@@ -8,7 +8,9 @@ plugins {
 android {
     namespace = "com.ditdah.core.settings"
     compileSdk = 37
-
+    defaultConfig {
+        minSdk = 25
+    }
 }
 
 dependencies {

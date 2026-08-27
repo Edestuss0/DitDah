@@ -28,26 +28,34 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.ditdah.core.designsystem.component.AppCard
 import com.ditdah.core.designsystem.component.AppScaffold
 import com.ditdah.core.morse.domain.entity.morseLetters
 import com.ditdah.core.morse.domain.entity.morseNumbers
 import com.ditdah.core.morse.domain.entity.textToMorseAlphabet
+import com.ditdah.features.symbols.home.viewmodel.SymbolsHomeViewModel
 
 @Composable
 fun SymbolsHomeScreen(
-    onPlay: (String) -> Unit
+    onPlay: (String) -> Unit,
+    viewModel: SymbolsHomeViewModel = hiltViewModel()
 ) {
-    SymbolsHomeContent(onPlay = onPlay)
+    val state by viewModel.state.collectAsState()
+
+    SymbolsHomeContent(onPlay = onPlay, alphabet = state.alphabet)
 }
 
 @Composable
 private fun SymbolsHomeContent(
     onPlay: (String) -> Unit,
+    alphabet: Map<String, String>,
 ) {
     val verticalScroll = rememberScrollState()
 
@@ -99,7 +107,7 @@ private fun SymbolsHomeContent(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    morseLetters.entries.forEach { item ->
+                    alphabet.entries.forEach { item ->
                         SymbolCard(item, onPlay, modifier = Modifier.weight(1f))
                     }
                 }
