@@ -45,12 +45,14 @@ internal class SettingsDataStoreSource @Inject constructor(
                 preferences[IS_DARK] = isDark
             }
             wpm?.let {
+                if (!(5..20).toList().contains(wpm)) return@edit
                 preferences[WPM] = wpm
             }
             language?.let {
                 preferences[LANGUAGE] = language.name.uppercase()
             }
             daysToCache?.let {
+                if (!(1..10).toList().contains(daysToCache)) return@edit
                 preferences[DAYS_TO_CACHE] = daysToCache
             }
         }
