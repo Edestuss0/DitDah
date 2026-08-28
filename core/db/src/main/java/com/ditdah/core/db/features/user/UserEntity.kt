@@ -9,5 +9,11 @@ data class UserEntity(
     val json: String,
     val cachedAt: Long = System.currentTimeMillis(),
     val isMe: Boolean,
+    val xp: Int,
+    val level: Int,
+    val lessonDoneEn: Int,
+    val lessonDoneRu: Int,
+    val dayStreak: Int,
+    val answerStreak: Int,
     val username: String
 )

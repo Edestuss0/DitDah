@@ -23,10 +23,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ditdah"
-include(":components")
 include(":app")
-include(":core")
-include(":features")
 include(":core:designsystem")
 include(":core:morse")
 include(":core:di")

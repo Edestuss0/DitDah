@@ -24,7 +24,15 @@ internal class UserLocalSource @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     fun observeMe(): Flow<User?> {
         return dao.observeMe().map { (it?.json)?.let { string -> Json.decodeFromString<UserDto>(string) }
-            ?.toEntity() }
+            ?.toEntity()?.copy(
+                xp = it.xp,
+                level = it.level,
+                lessonDoneRu = it.lessonDoneRu,
+                lessonDoneEn = it.lessonDoneEn,
+                dayStreak = it.dayStreak,
+                answerStreak = it.answerStreak
+            )
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -45,7 +53,13 @@ internal class UserLocalSource @Inject constructor(
             isMe = isMe,
             json = Json.encodeToString(user.toDto()),
             cachedAt = System.currentTimeMillis(),
-            username = user.username
+            username = user.username,
+            xp = user.xp,
+            answerStreak = user.answerStreak,
+            dayStreak = user.dayStreak,
+            level = user.level,
+            lessonDoneEn = user.lessonDoneEn,
+            lessonDoneRu = user.lessonDoneRu
         ))
     }
 

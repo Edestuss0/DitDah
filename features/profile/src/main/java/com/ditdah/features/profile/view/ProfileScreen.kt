@@ -29,13 +29,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
@@ -46,13 +43,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ditdah.core.designsystem.component.AppBadge
 import com.ditdah.core.designsystem.component.AppCard
 import com.ditdah.core.designsystem.component.AppScaffold
-import com.ditdah.core.designsystem.component.AppSnackbarHost
-import com.ditdah.core.designsystem.component.AppSnackbarVisuals
 import com.ditdah.core.designsystem.component.EmptyState
 import com.ditdah.core.designsystem.component.LoadingScreen
-import com.ditdah.core.designsystem.component.SnackbarMessageType
 import com.ditdah.core.user.domain.entity.User
-import com.ditdah.features.profile.viewmodel.ProfileEffect
 import com.ditdah.features.profile.viewmodel.ProfileViewModel
 
 @Composable
@@ -61,22 +54,6 @@ fun ProfileScreen(
     onSettingsClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(Unit) {
-        viewModel.effects.collect { effect ->
-            when (effect) {
-                is ProfileEffect.Error -> {
-                    snackbarHostState.showSnackbar(
-                        AppSnackbarVisuals(
-                            message = effect.message,
-                            type = SnackbarMessageType.ERROR
-                        )
-                    )
-                }
-            }
-        }
-    }
 
     if (state.isLoading) {
         LoadingScreen()
@@ -84,7 +61,6 @@ fun ProfileScreen(
         AppScaffold(
             modifier = Modifier.fillMaxSize(),
             statusBarColor = if (state.user != null) { MaterialTheme.colorScheme.surfaceContainer } else null,
-            snackbarHost = { AppSnackbarHost(host = snackbarHostState) }
         ) {
             state.user?.let { user ->
                 ProfileContent(user = user, onSettingsClick = onSettingsClick)
@@ -261,7 +237,6 @@ private fun StatCard(
     value: String,
     icon: ImageVector,
     iconTint: androidx.compose.ui.graphics.Color,
-    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically

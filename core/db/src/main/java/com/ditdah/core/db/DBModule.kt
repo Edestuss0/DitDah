@@ -3,6 +3,7 @@ package com.ditdah.core.db
 import android.content.Context
 import androidx.room3.Room
 import com.ditdah.core.db.features.user.UserDao
+import com.ditdah.core.db.migrations.MIGRATION_1_2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +22,7 @@ internal object DBModule {
         context.applicationContext,
         MainDB::class.java,
         "main.db"
-    ).fallbackToDestructiveMigration(true).build()
+    ).addMigrations(MIGRATION_1_2).build()
 
     @Provides
     fun provideUserDao(mainDB: MainDB): UserDao {

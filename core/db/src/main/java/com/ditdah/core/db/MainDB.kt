@@ -8,7 +8,7 @@ import com.ditdah.core.db.features.user.UserEntity
 
 @Database(
     entities = [UserEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 internal abstract class MainDB : RoomDatabase() {
