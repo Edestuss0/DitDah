@@ -70,7 +70,7 @@ fun MainPage(
             }
 
             composable(Tabs.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(onSettingsClick = {rootNavController.navigate(Screens.Settings.route)})
             }
         }
     }

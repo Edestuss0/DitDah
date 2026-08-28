@@ -13,6 +13,7 @@ sealed class Screens(val route: String) {
     data object SymbolsPlay : Screens("symbols_play/{symbol}") {
         fun navigate(symbol: String) = "symbols_play/$symbol"
     }
+    data object Settings : Screens("settings")
 }
 
 enum class Tabs(val route: String, val title: String, val icon: ImageVector) {

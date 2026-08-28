@@ -86,6 +86,7 @@ dependencies {
     implementation(project(":features:auth"))
     implementation(project(":features:profile"))
     implementation(project(":features:symbols"))
+    implementation(project(":features:settings"))
 
     implementation(project(":core:user"))
     implementation(project(":core:di"))

@@ -2,6 +2,7 @@ package com.ditdah.core.settings.data.repository
 
 import com.ditdah.core.di.ApplicationScope
 import com.ditdah.core.settings.data.datastore.source.SettingsDataStoreSource
+import com.ditdah.core.settings.domain.entity.Language
 import com.ditdah.core.settings.domain.entity.Settings
 import com.ditdah.core.settings.domain.repository.SettingsRepository
 import kotlinx.coroutines.CoroutineScope
@@ -24,4 +25,6 @@ internal class SettingsRepositoryImpl @Inject constructor(
     )
 
     override fun getSettings(): StateFlow<Settings> = settings
+
+    override suspend fun change(isDark: Boolean?, wpm: Int?, language: Language?, daysToCache: Int?) = source.change(isDark, wpm, language, daysToCache)
 }

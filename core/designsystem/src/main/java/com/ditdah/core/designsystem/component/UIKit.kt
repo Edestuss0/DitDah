@@ -207,6 +207,7 @@ fun AppScaffold(
     hasBackButton: Boolean = false,
     onBackClick: () -> Unit = {},
     statusBarColor: Color? = null,
+    topAppBarTextColor: Color? = null,
     content: @Composable (innerPadding: PaddingValues) -> Unit,
 ) {
     val context = LocalContext.current
@@ -231,11 +232,10 @@ fun AppScaffold(
         bottomBar = bottomBar,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = snackbarHost,
-    ) { scaffoldPadding -> // Получаем отступы от Scaffold (содержат высоту bottomBar)
+    ) { scaffoldPadding ->
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            // 1. Занимаем место под статус-бар
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -246,19 +246,16 @@ fun AppScaffold(
                     )
             )
 
-            // 2. Верхняя панель (если есть)
             if (topBarText != null || hasBackButton) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp),
+                    modifier = Modifier.fillMaxWidth().then(if (statusBarColor != null) Modifier.background(color = statusBarColor) else Modifier).padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (hasBackButton) {
                         IconButton(onClick = onBackClick) {
                             Icon(
                                 imageVector = Icons.Default.ChevronLeft,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                tint = if (topAppBarTextColor == null) MaterialTheme.colorScheme.onSurfaceVariant else topAppBarTextColor,
                                 contentDescription = null,
                             )
                         }
@@ -269,7 +266,7 @@ fun AppScaffold(
                             text = it,
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = if (topAppBarTextColor == null) MaterialTheme.colorScheme.onSurfaceVariant else topAppBarTextColor
                         )
                     }
                 }

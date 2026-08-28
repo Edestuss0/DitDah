@@ -24,7 +24,9 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.twotone.MilitaryTech
+import androidx.compose.material.icons.twotone.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
@@ -55,7 +57,8 @@ import com.ditdah.features.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
+    onSettingsClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -84,7 +87,7 @@ fun ProfileScreen(
             snackbarHost = { AppSnackbarHost(host = snackbarHostState) }
         ) {
             state.user?.let { user ->
-                ProfileContent(user = user)
+                ProfileContent(user = user, onSettingsClick = onSettingsClick)
             } ?: EmptyState(text = "Информация о пользователе недоступна")
         }
     }
@@ -93,56 +96,59 @@ fun ProfileScreen(
 @Composable
 private fun ProfileContent(
     user: User,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSettingsClick: () -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
+    Column(modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.extraLarge.copy(
-                topEnd = CornerSize(0.dp),
-                topStart = CornerSize(0.dp)
-            ),
+            shape = MaterialTheme.shapes.extraLarge.copy(topEnd = CornerSize(0.dp), topStart = CornerSize(0.dp)),
             color = MaterialTheme.colorScheme.surfaceContainer
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 20.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Surface(
-                    shape = CircleShape,
-                    color = MaterialTheme.colorScheme.primaryContainer,
-                    modifier = Modifier.size(64.dp)
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier.size(36.dp)
-                        )
-                    }
-                }
-                Spacer(Modifier.width(16.dp))
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = user.username,
-                        style = MaterialTheme.typography.headlineSmall
+            Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
+                IconButton(onClick = onSettingsClick, modifier = Modifier.padding(horizontal = 24.dp)) {
+                    Icon(
+                        imageVector = Icons.TwoTone.Settings,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.primary
                     )
-                    Spacer(Modifier.height(4.dp))
-                    AppBadge(text = "Уровень ${user.level}")
                 }
-                Icon(
-                    imageVector = Icons.TwoTone.MilitaryTech,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Surface(
+                        shape = CircleShape,
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        modifier = Modifier.size(64.dp).weight(1f)
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.size(36.dp)
+                            )
+                        }
+                    }
+                    Spacer(Modifier.width(16.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = user.username,
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        AppBadge(text = "Уровень ${user.level}")
+                    }
+                    Icon(
+                        imageVector = Icons.TwoTone.MilitaryTech,
+                        contentDescription = null,
+                        modifier = Modifier.size(48.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                Spacer(Modifier.height(20.dp))
             }
         }
 

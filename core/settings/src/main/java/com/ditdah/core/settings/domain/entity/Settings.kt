@@ -13,6 +13,6 @@ data class Settings(
     fun getWordDuration(): Long = getDotDuration() * 7
 }
 
-enum class Language{
-    RU, EN
+enum class Language(val label: String) {
+    RU("Русский"), EN("Английский")
 }

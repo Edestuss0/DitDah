@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import com.ditdah.core.settings.data.datastore.entities.DAYS_TO_CACHE
 import com.ditdah.core.settings.data.datastore.entities.IS_DARK
 import com.ditdah.core.settings.data.datastore.entities.LANGUAGE
 import com.ditdah.core.settings.data.datastore.entities.WPM
@@ -23,8 +25,6 @@ internal class SettingsDataStoreSource @Inject constructor(
     val dataStore = context.applicationContext.dataStore
 
     fun getSettings(): Flow<Settings> {
-
-
         return dataStore.data.map {
 
             val currentNightMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
@@ -33,8 +33,26 @@ internal class SettingsDataStoreSource @Inject constructor(
             Settings(
                 wpm = it[WPM] ?: 10,
                 language = Language.valueOf((it[LANGUAGE] ?: "EN").uppercase()),
-                isDarkTheme = it[IS_DARK] ?: isSystemDark
+                isDarkTheme = it[IS_DARK] ?: isSystemDark,
+                daysToCache = it[DAYS_TO_CACHE] ?: 3
             )
+        }
+    }
+
+    suspend fun change(isDark: Boolean? = null, wpm: Int? = null, language: Language? = null, daysToCache: Int? = null) {
+        dataStore.edit { preferences ->
+            isDark?.let {
+                preferences[IS_DARK] = isDark
+            }
+            wpm?.let {
+                preferences[WPM] = wpm
+            }
+            language?.let {
+                preferences[LANGUAGE] = language.name.uppercase()
+            }
+            daysToCache?.let {
+                preferences[DAYS_TO_CACHE] = daysToCache
+            }
         }
     }
 }

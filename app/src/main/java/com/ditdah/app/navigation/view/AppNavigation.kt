@@ -14,6 +14,7 @@ import com.ditdah.app.navigation.viewmodel.NavigationViewModel
 import com.ditdah.core.designsystem.component.LoadingScreen
 import com.ditdah.features.auth.view.AuthScreen
 import com.ditdah.features.freemode.play.view.FreemodePlayScreen
+import com.ditdah.features.settings.view.SettingsScreen
 import com.ditdah.features.symbols.home.view.SymbolsHomeScreen
 import com.ditdah.features.symbols.play.view.SymbolsPlayScreen
 
@@ -58,6 +59,10 @@ fun AppNavigation(viewModel: NavigationViewModel = hiltViewModel()) {
             SymbolsPlayScreen(
                 onBack = { navController.popBackStack() }
             )
+        }
+
+        composable(Screens.Settings.route) {
+            SettingsScreen(onBack = { navController.popBackStack() } )
         }
     }
 }
