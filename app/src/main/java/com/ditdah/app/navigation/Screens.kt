@@ -3,6 +3,7 @@ package com.ditdah.app.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.FitnessCenter
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -17,6 +18,7 @@ sealed class Screens(val route: String) {
 }
 
 enum class Tabs(val route: String, val title: String, val icon: ImageVector) {
+    Education("education", "Обучение", Icons.Default.MenuBook),
     Practice("practice", "Тренировка", Icons.Default.FitnessCenter),
     SymbolsHome("symbols_home", "Символы", Icons.Default.Dashboard),
     Profile("profile", "Профиль", Icons.Default.Person),

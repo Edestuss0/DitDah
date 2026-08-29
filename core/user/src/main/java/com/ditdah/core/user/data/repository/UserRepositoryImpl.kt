@@ -3,7 +3,6 @@ package com.ditdah.core.user.data.repository
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ditdah.core.di.ApplicationScope
-import com.ditdah.core.exception.AppException
 import com.ditdah.core.exception.toAppException
 import com.ditdah.core.user.data.local.UserLocalSource
 import com.ditdah.core.user.data.remote.UserRemoteSource
@@ -39,11 +38,13 @@ internal class UserRepositoryImpl @Inject constructor(
         runCatching { remote.getMe() }.onSuccess { local.invalidateMe(); local.insert(true, it) }.getOrElse { throw it.toAppException() }
     }
 
-    override suspend fun register(input: RegisterInput): Result<Unit> = runCatching { remote.register(input) }
-        .onFailure { it.toAppException() }.onSuccess { local.changeAuthStatus(true) }
+    override suspend fun register(input: RegisterInput): Result<Unit> =
+        runCatching { remote.register(input) }.onSuccess { local.changeAuthStatus(true) }
+            .recoverCatching { throw it.toAppException() }
 
-    override suspend fun login(input: LoginInput): Result<Unit> = runCatching { remote.login(input) }
-        .onFailure { it.toAppException() }.onSuccess { local.changeAuthStatus(true) }
+    override suspend fun login(input: LoginInput): Result<Unit> =
+        runCatching { remote.login(input) }.onSuccess { local.changeAuthStatus(true) }
+            .recoverCatching { throw it.toAppException() }
 
     override suspend fun getMe(): StateFlow<User?> = userState
 

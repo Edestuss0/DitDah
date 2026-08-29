@@ -9,7 +9,7 @@ import javax.inject.Inject
 class AuthUserUseCase @Inject internal constructor(
     private val repository: UserRepository
 ) {
-    suspend fun login(input: LoginInput) {
+    suspend fun login(input: LoginInput): Result<Unit> {
         when {
             input.username.isBlank()-> {
                 throw AppException.Validation("Пожалуйста, введите имя пользователя")
@@ -18,9 +18,10 @@ class AuthUserUseCase @Inject internal constructor(
                 throw AppException.Validation("Пожалуйста, введите пароль")
             }
         }
-        repository.login(input)
+        return repository.login(input)
     }
-    suspend fun register(input: RegisterInput) {
+
+    suspend fun register(input: RegisterInput): Result<Unit> {
         when {
             input.username.length < 6 || input.username.length > 20 -> {
                 throw AppException.Validation("Имя пользователя должно содержать от 6 до 20 символов")
@@ -29,7 +30,7 @@ class AuthUserUseCase @Inject internal constructor(
                 throw AppException.Validation("Пароль должен содержать от 4 символов")
             }
         }
-        repository.register(input)
+        return repository.register(input)
     }
     suspend fun logout() = repository.logout()
     fun getStatus() = repository.getAuthStatus()

@@ -189,6 +189,6 @@ class UserRemoteSourceTest {
             runCatching { source.login(LoginInput(username = "sdds", password = "traktaristka67")) }
 
         assertEquals(result.isSuccess, false)
-        assertEquals(result.exceptionOrNull(), AppException.Network.ServerError(401))
+        assert(result.exceptionOrNull() is IllegalArgumentException)
     }
 }

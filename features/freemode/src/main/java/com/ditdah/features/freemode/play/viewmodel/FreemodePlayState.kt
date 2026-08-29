@@ -4,7 +4,7 @@ import com.ditdah.core.morse.domain.entity.FreemodeDifficulty
 import com.ditdah.core.morse.domain.entity.MorseQuestion
 
 data class FreemodePlayState(
-    val question: MorseQuestion? = null,
+    val question: MorseQuestion.SimpleQuestion? = null,
     val answerStreak: Int = 0,
     val currentInput: String = "",
     val isLoading: Boolean = false,

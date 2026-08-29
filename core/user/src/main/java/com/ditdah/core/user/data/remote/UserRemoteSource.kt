@@ -29,7 +29,7 @@ internal class UserRemoteSource @Inject constructor(
             contentType(ContentType.Application.Json)
         }
         if (!response.status.isSuccess()) {
-            throw AppException.Network.ServerError(response.status.value)
+            throw IllegalArgumentException("Неверный логин или пароль")
         }
     }
 

@@ -3,7 +3,7 @@ package com.ditdah.features.symbols.play.viewmodel
 import com.ditdah.core.morse.domain.entity.MorseQuestion
 
 data class SymbolsPlayState(
-    val question: MorseQuestion? = null,
+    val question: MorseQuestion.SimpleQuestion? = null,
     val answerStreak: Int = 0,
     val currentInput: String = "",
     val isLoading: Boolean = false,

@@ -9,7 +9,7 @@ import com.ditdah.core.db.features.user.UserEntity
 @Database(
     entities = [UserEntity::class],
     version = 2,
-    exportSchema = false
+    exportSchema = true
 )
 internal abstract class MainDB : RoomDatabase() {
     abstract fun userDao(): UserDao

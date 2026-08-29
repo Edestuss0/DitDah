@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/core/user" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/auth" />
+            <option value="$PROJECT_DIR$/features/education" />
             <option value="$PROJECT_DIR$/features/freemode" />
             <option value="$PROJECT_DIR$/features/practice" />
             <option value="$PROJECT_DIR$/features/profile" />

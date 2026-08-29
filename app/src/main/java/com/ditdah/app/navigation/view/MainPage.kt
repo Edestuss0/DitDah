@@ -17,6 +17,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ditdah.app.navigation.Screens
 import com.ditdah.app.navigation.Tabs
+import com.ditdah.features.education.home.view.EducationHomeScreen
 import com.ditdah.features.practice.view.PracticeScreen
 import com.ditdah.features.profile.view.ProfileScreen
 import com.ditdah.features.symbols.home.view.SymbolsHomeScreen
@@ -71,6 +72,10 @@ fun MainPage(
 
             composable(Tabs.Profile.route) {
                 ProfileScreen(onSettingsClick = {rootNavController.navigate(Screens.Settings.route)})
+            }
+
+            composable(Tabs.Education.route) {
+                EducationHomeScreen(onPlay = {})
             }
         }
     }

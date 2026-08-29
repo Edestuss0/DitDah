@@ -35,7 +35,7 @@ class AuthVIewModel @Inject constructor(
                     }
                     is AuthEvent.LoginInput.Submit -> {
                         viewModelScope.launch {
-                            runCatching { auth.login(state.value.loginInput) }.onFailure {
+                            auth.login(state.value.loginInput).onFailure {
                                 _effects.send(AuthEffect.Error(it.message ?: "Произошла непредвиденная ошибка"))
                             }
                         }
@@ -53,7 +53,7 @@ class AuthVIewModel @Inject constructor(
                     }
                     is AuthEvent.RegisterInput.Submit -> {
                         viewModelScope.launch {
-                            runCatching { auth.register(state.value.registerInput) }.onFailure {
+                            auth.register(state.value.registerInput).onFailure {
                                 _effects.send(AuthEffect.Error(it.message ?: "Произошла непредвиденная ошибка"))
                             }
                         }

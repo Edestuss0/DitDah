@@ -12,7 +12,11 @@ import kotlin.random.nextInt
 
 internal class FreemodeGenerator @Inject constructor() {
 
-    fun generate(difficulty: FreemodeDifficulty, symbol: String? = null, language: Language): MorseQuestion {
+    fun generate(
+        difficulty: FreemodeDifficulty,
+        symbol: String? = null,
+        language: Language
+    ): MorseQuestion.SimpleQuestion {
         val length = when {
             symbol == null -> Random.nextInt(2..5)
             difficulty == FreemodeDifficulty.EASY -> Random.nextInt(1..3)
@@ -24,7 +28,11 @@ internal class FreemodeGenerator @Inject constructor() {
         return generateByLength(length, symbol, language)
     }
 
-    private fun generateByLength(length: Int, symbol: String?, language: Language): MorseQuestion {
+    private fun generateByLength(
+        length: Int,
+        symbol: String?,
+        language: Language
+    ): MorseQuestion.SimpleQuestion {
         val type = MorseQuestionType.entries.random()
 
         when (type) {
@@ -42,7 +50,11 @@ internal class FreemodeGenerator @Inject constructor() {
                     answer += letter.key
                 }
 
-                return MorseQuestion(type = type, answer = answer, question = question)
+                return MorseQuestion.SimpleQuestion(
+                    type = type,
+                    answer = answer,
+                    question = question
+                )
             }
             MorseQuestionType.MORSE, MorseQuestionType.AUDIO -> {
                 var question = ""
@@ -57,7 +69,11 @@ internal class FreemodeGenerator @Inject constructor() {
                     question += "${letter.value} "
                     answer += letter.key
                 }
-                return MorseQuestion(type = type, answer = answer, question = question)
+                return MorseQuestion.SimpleQuestion(
+                    type = type,
+                    answer = answer,
+                    question = question
+                )
             }
         }
     }

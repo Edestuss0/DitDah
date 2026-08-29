@@ -10,7 +10,10 @@ class FreemodeGeneratorUseCase @Inject internal constructor(
     private val generator: FreemodeGenerator,
     private val settings: GetSettingsUseCase
 ) {
-    operator fun invoke(difficulty: FreemodeDifficulty = FreemodeDifficulty.MEDIUM, symbol: String? = null): MorseQuestion {
+    operator fun invoke(
+        difficulty: FreemodeDifficulty = FreemodeDifficulty.MEDIUM,
+        symbol: String? = null
+    ): MorseQuestion.SimpleQuestion {
         val language = settings().value.language
         return generator.generate(difficulty, symbol, language)
     }

@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.ktor.client.logging)
 
     implementation(project(":core:designsystem"))
+    implementation(project(":features:education"))
     implementation(project(":features:freemode"))
     implementation(project(":features:practice"))
     implementation(project(":features:auth"))

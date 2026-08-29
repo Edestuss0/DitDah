@@ -38,13 +38,29 @@ internal class UserLocalSource @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getUserById(id: Int, duration: Long): User? {
         clearExpired(duration)
-        return dao.getUserById(id)?.let { Json.decodeFromString<UserDto>(it.json) }?.toEntity()
+        val user = dao.getUserById(id)
+        return user?.let { Json.decodeFromString<UserDto>(it.json) }?.toEntity()?.copy(
+            xp = user.xp,
+            level = user.level,
+            lessonDoneRu = user.lessonDoneRu,
+            lessonDoneEn = user.lessonDoneEn,
+            dayStreak = user.dayStreak,
+            answerStreak = user.answerStreak
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getUserByName(name: String, duration: Long): User? {
         clearExpired(duration)
-        return dao.getUserByUsername(name)?.let { Json.decodeFromString<UserDto>(it.json) }?.toEntity()
+        val user = dao.getUserByUsername(name)
+        return user?.let { Json.decodeFromString<UserDto>(it.json) }?.toEntity()?.copy(
+            xp = user.xp,
+            level = user.level,
+            lessonDoneRu = user.lessonDoneRu,
+            lessonDoneEn = user.lessonDoneEn,
+            dayStreak = user.dayStreak,
+            answerStreak = user.answerStreak
+        )
     }
 
     suspend fun insert(isMe: Boolean, user: User) {

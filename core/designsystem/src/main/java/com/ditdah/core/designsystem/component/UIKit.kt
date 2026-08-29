@@ -2,9 +2,6 @@ package com.ditdah.core.designsystem.component
 
 import android.app.Activity
 import android.os.Build
-import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -19,6 +16,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsTopHeight
@@ -40,14 +38,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.style.TextAlign
@@ -77,6 +74,7 @@ fun AppCard(
 @Composable
 fun AppBadge(
     text: String,
+    icon: ImageVector? = null,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -89,14 +87,20 @@ fun AppBadge(
             MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
         )
     ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(
-                horizontal = 14.dp,
-                vertical = 7.dp
-            ),
-            style = MaterialTheme.typography.labelLarge
-        )
+        Row(modifier = Modifier.padding(horizontal = 14.dp, vertical = 7.dp)) {
+            icon?.let {
+                Icon(
+                    imageVector = icon,
+                    modifier = Modifier.size(16.dp),
+                    contentDescription = null
+                )
+                Spacer(Modifier.width(14.dp))
+            }
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelLarge
+            )
+        }
     }
 }
 
@@ -248,7 +252,10 @@ fun AppScaffold(
 
             if (topBarText != null || hasBackButton) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().then(if (statusBarColor != null) Modifier.background(color = statusBarColor) else Modifier).padding(horizontal = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .then(if (statusBarColor != null) Modifier.background(color = statusBarColor) else Modifier)
+                        .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (hasBackButton) {

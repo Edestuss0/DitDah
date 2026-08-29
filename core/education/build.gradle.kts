@@ -15,6 +15,8 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.kotlinx.serialization.json)
@@ -22,7 +24,10 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    testImplementation(libs.ktor.client.mock)
     implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.content.negotation)
+    implementation(libs.ktor.client.serialization)
 
     implementation(project(":core:di"))
     implementation(project(":core:settings"))

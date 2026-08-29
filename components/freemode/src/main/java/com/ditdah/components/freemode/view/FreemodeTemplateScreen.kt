@@ -13,14 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesomeMosaic
-import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -75,53 +70,64 @@ fun FreemodeTemplateScreen(
         ) {
             header()
 
-            when (question.type) {
-                MorseQuestionType.TEXT -> {
-                    AppCard(modifier = Modifier.fillMaxWidth()) {
-                        Row(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text(
-                                text = "Введите:",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Text(
+            when (question) {
+                is MorseQuestion.QuizQuestion -> {}
+                is MorseQuestion.SimpleQuestion -> {
+                    when (question.type) {
+                        MorseQuestionType.TEXT -> {
+                            AppCard(modifier = Modifier.fillMaxWidth()) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        text = "Введите:",
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        text = question.question,
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                }
+                            }
+                            MorseKey(onChange = onInput)
+                        }
+
+                        MorseQuestionType.AUDIO -> {
+                            MorseAudioInput(
                                 text = question.question,
-                                style = MaterialTheme.typography.bodyLarge
+                                onValueChange = onInput
                             )
                         }
-                    }
-                    MorseKey(onChange = onInput)
-                }
-                MorseQuestionType.AUDIO -> {
-                    MorseAudioInput(
-                        text = question.question,
-                        onValueChange = onInput
-                    )
-                }
-                MorseQuestionType.MORSE -> {
-                    AppCard(modifier = Modifier.fillMaxWidth()) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "Переведите - ${question.question}",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            AppTextField(
-                                value = input,
-                                onValueChange = onInput,
-                                label = "Ваш ответ",
 
-                                )
+                        MorseQuestionType.MORSE -> {
+                            AppCard(modifier = Modifier.fillMaxWidth()) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Text(
+                                        text = "Переведите - ${question.question}",
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    AppTextField(
+                                        value = input,
+                                        onValueChange = onInput,
+                                        label = "Ваш ответ",
+
+                                        )
+                                }
+                            }
                         }
                     }
                 }
             }
+
             Spacer(Modifier.weight(1f))
             PrimaryButton(
                 text = "Проверить",
@@ -156,7 +162,12 @@ fun FreemodeTemplateScreen(
                                 style = MaterialTheme.typography.titleLarge
                             )
                             Text(
-                                text = "Правильный ответ - ${question.answer}",
+                                text = "Правильный ответ - ${
+                                    when (question) {
+                                        is MorseQuestion.SimpleQuestion -> question.answer
+                                        is MorseQuestion.QuizQuestion -> question.options[question.correctIndex]
+                                    }
+                                }",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
